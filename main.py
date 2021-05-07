@@ -1,10 +1,11 @@
 import sqlite3
-from flask import Flask, g, render_template, redirect, request, url_for
+from flask import Flask, flash, g, render_template, redirect, request, url_for
 from markupsafe import escape
 
 # Connect database, create database functions
 database = 'user_info.db'
 app = Flask(__name__)
+app.secret_key = b'\x15]\xa1c\xf2\xe2\x04\xb2\xba\n4\xb3S\xbfh\xce\x91\xd2\xefu\xa5\xb9\xe0#'
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -30,9 +31,10 @@ def login():
                                                     {'username':username, 'password':password})
             info = cur.fetchone()
             if info is not None:
+                flash('You are sucessfully logged in.')
                 return redirect(url_for('profile', username=username))
             else:
-                return "Username doesn't exist or password is incorrect." 
+                flash("Username doesn't exist or password is incorrect.")
 
             conn.close()
     
@@ -52,9 +54,10 @@ def register():
             if info == None:
                 cur.execute("INSERT INTO users VALUES (:username, :password)", {'username':username, 'password': password})
                 conn.commit()
+                flash('You sucessfully created an account.')
                 return redirect(url_for('login'))
             else:
-                return "Username already exists."
+                flash("Username already exists.")
 
             conn.close()
     
