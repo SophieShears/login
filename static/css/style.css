@@ -1,0 +1,19 @@
+body {
+    background-color: rgb(37, 186, 255);
+}
+
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    padding: 20px;
+    color: rgb(41, 41, 41);
+    text-align: center;
+}
+
+.input {
+    vertical-align: middle;
+}
