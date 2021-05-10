@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, flash, g, render_template, redirect, request, url_for
+from flask import Flask, flash, g, render_template, redirect, request, session, url_for
 from markupsafe import escape
 
 # Connect database, create database functions
@@ -38,7 +38,7 @@ def login():
 
             conn.close()
     
-    return render_template('login.html')
+    return render_template('html/login.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -61,12 +61,14 @@ def register():
 
             conn.close()
     
-    return render_template('register.html')
+    return render_template('html/register.html')
 
 
 @app.route('/profile/<username>')
 def profile(username):
-    return 'Welcome to your profile %s' % escape(username) 
+    session['user_name'] = escape(username)
+    return render_template('html/profile.html')
+    # return 'Welcome to your profile %s' % escape(username) 
 
 
 if __name__ == '__main__':
